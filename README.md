@@ -50,3 +50,16 @@ Acesse `/integrations` no navegador para ver os últimos 20 registros.
 ## Regra de Negócio (Simulação)
 - ID Externo PAR: Sucesso.
 - ID Externo ÍMPAR: Erro.
+
+## Testes Automatizados
+
+O projeto inclui testes unitários e de feature para garantir o funcionamento.
+Para rodar os testes:
+
+```bash
+php artisan test
+```
+
+Principais testes:
+- `Tests\Feature\Api\IntegrationJobTest`: Verifica endpoints e validação.
+- `Tests\Feature\Jobs\ProcessIntegrationJobTest`: Verifica a lógica de processamento (Par/Ímpar).
