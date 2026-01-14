@@ -1,4 +1,8 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,7 +16,7 @@ body {
     margin: 0 auto;
     background: white;
     border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     padding: 30px;
 }
 
@@ -31,7 +35,8 @@ table {
     margin-bottom: 20px;
 }
 
-th, td {
+th,
+td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid #eee;
@@ -58,10 +63,25 @@ tr:hover {
     display: inline-block;
 }
 
-.status.PENDING { background: #fff3cd; color: #856404; }
-.status.PROCESSING { background: #cce5ff; color: #004085; }
-.status.SUCCESS { background: #d4edda; color: #155724; }
-.status.ERROR { background: #f8d7da; color: #721c24; }
+.status.PENDING {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status.PROCESSING {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.status.SUCCESS {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status.ERROR {
+    background: #f8d7da;
+    color: #721c24;
+}
 
 .actions {
     display: flex;
@@ -109,7 +129,7 @@ tr:hover {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     animation: fadeIn 0.3s;
 }
 
@@ -129,13 +149,25 @@ tr:hover {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes slideIn {
-    from { transform: translateY(-50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .modal-header {
@@ -218,17 +250,27 @@ tr:hover {
 .pagination {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 5px;
     margin-top: 20px;
+    list-style: none;
+    /* Remove bolinhas */
 }
 
-.pagination a, .pagination span {
+.pagination li {
+    list-style: none;
+    /* Remove bolinhas dos itens */
+}
+
+.pagination a,
+.pagination span {
     padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 6px;
     text-decoration: none;
     color: #667eea;
     transition: all 0.3s;
+    display: inline-block;
 }
 
 .pagination a:hover {

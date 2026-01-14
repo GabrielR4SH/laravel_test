@@ -24,7 +24,9 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>ID Externo</th>
+                    <th>Externo</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
                     <th>Status</th>
                     <th>Erro</th>
                     <th>Criado em</th>
@@ -36,12 +38,14 @@
                 <tr>
                     <td>{{ $job->id }}</td>
                     <td>{{ $job->external_id }}</td>
+                    <td>{{ $job->payload['nome'] ?? '-' }}</td>
+                    <td>{{ $job->payload['cpf'] ?? '-' }}</td>
                     <td><span class="status {{ $job->status }}">{{ $job->status }}</span></td>
                     <td>{{ $job->last_error ?? '-' }}</td>
                     <td>{{ $job->created_at->format('d/m/Y H:i') }}</td>
                     <td>
                         <div class="actions">
-                            <button class="btn btn-edit" onclick="openEditModal({{ $job->id }}, '{{ $job->external_id }}', '{{ $job->payload['nome'] ?? '' }}', '{{ $job->payload['cpf'] ?? '' }}')">
+                            <button class="btn btn-edit" onclick="openEditModal({{ $job->id }}, '{{ addslashes($job->external_id) }}', '{{ addslashes($job->payload['nome'] ?? '') }}', '{{ addslashes($job->payload['cpf'] ?? '') }}')">
                                 <i class="fas fa-edit"></i> Editar
                             </button>
                             <button class="btn btn-delete" onclick="openDeleteModal({{ $job->id }})">
