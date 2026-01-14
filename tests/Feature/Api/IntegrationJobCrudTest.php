@@ -12,9 +12,13 @@ class IntegrationJobCrudTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Testa se é possível atualizar um job de integração existente.
+     * Verifica se os dados são atualizados corretamente e se o job é re-enviado para a fila.
+     */
     public function test_can_update_integration_job()
     {
-        Queue::fake();
+        Queue::fake(); // Simula a fila para não processar de verdade
 
         $job = IntegrationJob::create([
             'external_id' => '123',
@@ -44,6 +48,10 @@ class IntegrationJobCrudTest extends TestCase
         Queue::assertPushed(ProcessIntegrationJob::class);
     }
 
+    /**
+     * Testa se a validação de campos obrigatórios funciona no update.
+     * Deve retornar erro 422 quando external_id ou cpf estiverem inválidos.
+     */
     public function test_update_validates_required_fields()
     {
         $job = IntegrationJob::create([
@@ -61,6 +69,10 @@ class IntegrationJobCrudTest extends TestCase
             ->assertJsonValidationErrors(['external_id', 'cpf']);
     }
 
+    /**
+     * Testa se ao atualizar um job com erro, o status volta para PENDING
+     * e o campo last_error é limpo (resetado para null).
+     */
     public function test_update_resets_status_and_error()
     {
         Queue::fake();
@@ -84,6 +96,10 @@ class IntegrationJobCrudTest extends TestCase
         $this->assertNull($job->last_error);
     }
 
+    /**
+     * Testa se é possível deletar um job de integração.
+     * Verifica se o registro é removido do banco de dados.
+     */
     public function test_can_delete_integration_job()
     {
         $job = IntegrationJob::create([
@@ -102,6 +118,9 @@ class IntegrationJobCrudTest extends TestCase
         ]);
     }
 
+    /**
+     * Testa se ao tentar deletar um job inexistente, retorna erro 404.
+     */
     public function test_delete_returns_404_for_nonexistent_job()
     {
         $response = $this->deleteJson('/api/integrations/customers/99999');
@@ -109,6 +128,9 @@ class IntegrationJobCrudTest extends TestCase
         $response->assertStatus(404);
     }
 
+    /**
+     * Testa se ao tentar atualizar um job inexistente, retorna erro 404.
+     */
     public function test_update_returns_404_for_nonexistent_job()
     {
         $response = $this->putJson('/api/integrations/customers/99999', [
@@ -119,6 +141,10 @@ class IntegrationJobCrudTest extends TestCase
         $response->assertStatus(404);
     }
 
+    /**
+     * Testa se ao atualizar um job, ele é re-enviado para a fila com o ID correto.
+     * Isso garante que o job será reprocessado após a edição.
+     */
     public function test_update_dispatches_job_with_correct_id()
     {
         Queue::fake();

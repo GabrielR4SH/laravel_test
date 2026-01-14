@@ -13,9 +13,13 @@ class IntegrationJobTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Testa se é possível criar um novo job de integração.
+     * Verifica se o job é salvo no banco com status PENDING e se é enviado para a fila.
+     */
     public function test_can_create_integration_job()
     {
-        Queue::fake();
+        Queue::fake(); // Simula a fila para não processar de verdade
 
         $payload = [
             'external_id' => '123',
@@ -42,6 +46,10 @@ class IntegrationJobTest extends TestCase
         Queue::assertPushed(ProcessIntegrationJob::class);
     }
 
+    /**
+     * Testa se a validação de campos obrigatórios funciona.
+     * Deve retornar erro 422 quando external_id ou cpf não forem enviados.
+     */
     public function test_validates_required_fields()
     {
         $response = $this->postJson('/api/integrations/customers', []);
@@ -50,6 +58,10 @@ class IntegrationJobTest extends TestCase
             ->assertJsonValidationErrors(['external_id', 'cpf']);
     }
 
+    /**
+     * Testa se é possível consultar o status de um job existente.
+     * Verifica se os dados retornados estão corretos (id, external_id, status).
+     */
     public function test_can_get_job_status()
     {
         $job = IntegrationJob::create([
