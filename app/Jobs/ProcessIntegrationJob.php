@@ -14,7 +14,7 @@ class ProcessIntegrationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $integrationJobId;
+    public $integrationJobId;
 
     /**
      * Create a new job instance.
@@ -55,7 +55,7 @@ class ProcessIntegrationJob implements ShouldQueue
                 // Odd -> Error
                 $job->update([
                     'status' => 'ERROR',
-                    'last_error' => 'Falha na integração simulada',
+                    'last_error' => 'Falha na integração simulada, numero é impar',
                 ]);
             }
         } catch (\Throwable $e) {

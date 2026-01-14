@@ -40,6 +40,6 @@ class ProcessIntegrationJobTest extends TestCase
         $job->refresh();
 
         $this->assertEquals('ERROR', $job->status);
-        $this->assertEquals('Falha na integração simulada', $job->last_error);
+        $this->assertEquals('Falha na integração simulada, numero é impar', $job->last_error);
     }
 }

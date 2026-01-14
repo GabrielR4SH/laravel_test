@@ -18,6 +18,6 @@ Route::get('/', function () {
 });
 
 Route::get('/integrations', function () {
-    $jobs = \App\Models\IntegrationJob::latest()->limit(20)->get();
+    $jobs = \App\Models\IntegrationJob::latest()->paginate(8);
     return view('integrations.index', compact('jobs'));
 });
